@@ -1,0 +1,27 @@
+{
+  "name": "jsparring",
+  "version": "1.0.0",
+  "description": "Head-to-head algorithm's",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/01212/JSparring.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/01212/JSparring/issues"
+  },
+  "homepage": "https://github.com/01212/JSparring#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "react": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
+    "redux": "^4.0.1",
+    "webpack": "^4.29.1"
+  }
+}
