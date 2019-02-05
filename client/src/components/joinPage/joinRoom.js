@@ -7,17 +7,14 @@ import {
   WelcomeHeader
 } from "./joinRoom_styleComponents";
 import * as actions from "../../actions/battleActions";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = store => {
   return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    joinRoom: username => {
-      dispatch(actions.joinRoom(username));
-    }
-  };
+  return {};
 };
 
 class JoinRoom extends React.Component {
@@ -30,9 +27,9 @@ class JoinRoom extends React.Component {
       <JoinRoomBody>
         <JoinRoomContainer>
           <WelcomeHeader>Player One, are you ready?</WelcomeHeader>
-          <JoinRoomButton onClick={() => this.props.joinRoom("marlon")}>
-            Battle To The Death
-          </JoinRoomButton>
+          <Link to="/battle">
+            <JoinRoomButton>Battle To The Death</JoinRoomButton>
+          </Link>
         </JoinRoomContainer>
       </JoinRoomBody>
     );

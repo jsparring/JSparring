@@ -26,6 +26,9 @@ const mapDispatchToProps = dispatch => {
     },
     testCode: code => {
       dispatch(battleActions.testCode(code));
+    },
+    joinRoom: username => {
+      dispatch(battleActions.joinRoom(username));
     }
   };
 };
@@ -43,6 +46,10 @@ class BattlePage extends React.Component {
 
   rightCode(editor, data, value) {
     console.log("right code: ", value);
+  }
+
+  componentDidMount() {
+    this.props.joinRoom("angry_jellyfish666");
   }
 
   render() {

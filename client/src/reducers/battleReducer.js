@@ -47,8 +47,8 @@ function battleReducer(state = initialState, action) {
       leftCode = action.payload;
       console.log("===in reducer==", leftCode);
 
-      // socket = tempState.socket;
-      // socket.send(leftCode);
+      socket = tempState.socket;
+      socket.send(leftCode);
 
       return fromJS({
         ...tempState,
@@ -56,12 +56,12 @@ function battleReducer(state = initialState, action) {
       });
 
     case types.JOIN_ROOM:
-      // socket = setUpSocket("angry_jellyfish666");
-      // tempState = state.toJS();
+      socket = setUpSocket("angry_jellyfish666");
+      tempState = state.toJS();
 
       return fromJS({
-        ...tempState
-        // socket
+        ...tempState,
+        socket
       });
 
     default:
