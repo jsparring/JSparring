@@ -42,6 +42,20 @@ export const GithubButton = styled.button`
 export const Head2headContainer = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: 50% 50%;
-  grid-column-gap: 10px;
+  grid-template-columns: 49% 2% 49%;
+  grid-column-gap: 0px;
+`;
+
+export const PlayerContainer = styled.div``;
+
+export const VertLine = styled.div`
+  height: 100%;
+  background-color: #00edff;
+`;
+
+export const DescriptionContainer = styled.div`
+  width: 100%;
+  height: 200px;
+  background-color: black;
+  color: white;
 `;

@@ -1,17 +1,41 @@
 import React from "react";
+import { connect } from "react-redux";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 import "./codemirror.css";
 import { Head2headContainer } from "../styleComponents/styleComponents";
+import * as battleActions from "../../actions/battleActions";
+import {
+  PlayerContainer,
+  DescriptionContainer,
+  VertLine
+} from "../styleComponents/styleComponents";
+
+const mapStateToProps = store => {
+  const state = store.battleReducer.toJS();
+  return {
+    leftCode: state.leftCode
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveLeftCode: value => {
+      dispatch(battleActions.saveLeftCode(value));
+    }
+  };
+};
 
 class BattlePage extends React.Component {
   constructor(props) {
     super(props);
+    this.leftCode = this.leftCode.bind(this);
   }
 
   leftCode(editor, data, value) {
-    console.log("left code: ", value);
+    // console.log("left code: ", value);
+    this.props.saveLeftCode(value);
   }
 
   rightCode(editor, data, value) {
@@ -22,30 +46,42 @@ class BattlePage extends React.Component {
     return (
       <div>
         <Head2headContainer>
-          <CodeMirror
-            id="left-codemirror"
-            value="// its sparring day"
-            options={{
-              mode: "javascript",
-              theme: "material",
-              lineNumbers: true
-            }}
-            onChange={this.leftCode}
-          />
-          <CodeMirror
-            id="right-codemirror"
-            value="// its sparring day"
-            options={{
-              mode: "javascript",
-              theme: "material",
-              lineNumbers: true
-            }}
-            onChange={this.rightCode}
-          />
+          <PlayerContainer>
+            <DescriptionContainer>this is a description</DescriptionContainer>
+            <CodeMirror
+              id="left-codemirror"
+              value="// its sparring day"
+              options={{
+                mode: "javascript",
+                theme: "material",
+                lineNumbers: true
+              }}
+              onChange={this.leftCode}
+            />
+          </PlayerContainer>
+          <VertLine />
+          <PlayerContainer>
+            <DescriptionContainer>
+              This is also a description
+            </DescriptionContainer>
+            <CodeMirror
+              id="right-codemirror"
+              value="// its sparring day"
+              options={{
+                mode: "javascript",
+                theme: "material",
+                lineNumbers: true
+              }}
+              onChange={this.rightCode}
+            />
+          </PlayerContainer>
         </Head2headContainer>
       </div>
     );
   }
 }
 
-export default BattlePage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BattlePage);
