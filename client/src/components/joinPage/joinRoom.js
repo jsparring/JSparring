@@ -1,7 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { JoinRoomButton } from "./joinRoom_styleComponents";
-import * as actions from "../../actions/sockets/actions";
+import {
+  JoinRoomButton,
+  JoinRoomContainer,
+  JoinRoomBody,
+  WelcomeHeader
+} from "./joinRoom_styleComponents";
+import * as actions from "../../actions/battleActions";
 
 const mapStateToProps = store => {
   return {};
@@ -22,9 +27,14 @@ class JoinRoom extends React.Component {
 
   render() {
     return (
-      <div>
-        <JoinRoomButton onClick={() => this.props.joinRoom("marlon")} />
-      </div>
+      <JoinRoomBody>
+        <JoinRoomContainer>
+          <WelcomeHeader>Player One, are you ready?</WelcomeHeader>
+          <JoinRoomButton onClick={() => this.props.joinRoom("marlon")}>
+            Battle To The Death
+          </JoinRoomButton>
+        </JoinRoomContainer>
+      </JoinRoomBody>
     );
   }
 }

@@ -23,6 +23,9 @@ const mapDispatchToProps = dispatch => {
   return {
     saveLeftCode: value => {
       dispatch(battleActions.saveLeftCode(value));
+    },
+    testCode: code => {
+      dispatch(battleActions.testCode(code));
     }
   };
 };
@@ -54,10 +57,14 @@ class BattlePage extends React.Component {
               options={{
                 mode: "javascript",
                 theme: "material",
-                lineNumbers: true
+                lineNumbers: true,
+                autoCloseBrackets: true
               }}
               onChange={this.leftCode}
             />
+            <button onClick={() => this.props.testCode(this.props.leftCode)}>
+              Evaluate
+            </button>
           </PlayerContainer>
           <VertLine />
           <PlayerContainer>
@@ -66,7 +73,7 @@ class BattlePage extends React.Component {
             </DescriptionContainer>
             <CodeMirror
               id="right-codemirror"
-              value="// its sparring day"
+              value={this.props.leftCode}
               options={{
                 mode: "javascript",
                 theme: "material",
