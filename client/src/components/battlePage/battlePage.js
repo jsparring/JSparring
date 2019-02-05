@@ -15,7 +15,9 @@ import {
 const mapStateToProps = store => {
   const state = store.battleReducer.toJS();
   return {
-    leftCode: state.leftCode
+    leftCode: state.leftCode,
+    rightCode: state.rightCode,
+    roomId: state.roomId
   };
 };
 
@@ -28,7 +30,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(battleActions.testCode(code));
     },
     joinRoom: username => {
-      dispatch(battleActions.joinRoom(username));
+      dispatch(battleActions.joinRoom(dispatch, username));
     }
   };
 };
@@ -55,12 +57,13 @@ class BattlePage extends React.Component {
   render() {
     return (
       <div>
+        <h3>{this.props.roomId}</h3>
         <Head2headContainer>
           <PlayerContainer>
             <DescriptionContainer>this is a description</DescriptionContainer>
             <CodeMirror
               id="left-codemirror"
-              value="// its sparring day"
+              value={this.props.leftCode}
               options={{
                 mode: "javascript",
                 theme: "material",
@@ -80,7 +83,7 @@ class BattlePage extends React.Component {
             </DescriptionContainer>
             <CodeMirror
               id="right-codemirror"
-              value={this.props.leftCode}
+              value={this.props.rightCode}
               options={{
                 mode: "javascript",
                 theme: "material",

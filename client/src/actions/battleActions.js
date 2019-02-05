@@ -6,9 +6,19 @@ export const saveLeftCode = input => ({
   payload: input
 });
 
-export const joinRoom = username => ({
+export const joinRoom = (dispatch, username) => ({
   type: types.JOIN_ROOM,
-  payload: username
+  payload: { dispatch, username }
+});
+
+export const writeCode = code => ({
+  type: types.WRITE_CODE,
+  payload: code
+});
+
+export const saveRoomId = id => ({
+  type: types.SAVE_ROOM_ID,
+  payload: id
 });
 
 export const testCode = code => {

@@ -1,6 +1,6 @@
-const Room = require("./Room.js");
+const Room = require('./Room.js');
 
-const Lobby = function() {
+function Lobby() {
   this.waitingQueue = [];
   this.processQueue = [];
   this.generalQueue = [];
@@ -37,8 +37,8 @@ Lobby.prototype.addToWaitingQue = function() {
 Lobby.prototype.createRoom = function() {
   const that = this;
   let counter = Date.now();
-  setInterval(()=> {
-    if(that.waitingQueue.length === 2) {
+  setInterval(() => {
+    if (that.waitingQueue.length === 2) {
       const key = counter++;
       const playerOne = that.waitingQueue.pop();
       playerOne.waitStatus = 3;
@@ -46,14 +46,14 @@ Lobby.prototype.createRoom = function() {
       const playerTwo = that.waitingQueue.pop();
       playerTwo.waitStatus = 3;
       playerTwo.roomId = key;
-      that.battleRooms[key] = new Room ([playerOne, playerTwo])
+      that.battleRooms[key] = new Room([playerOne, playerTwo]);
     }
     // console.log('RUNNING THE LOBBBBBYYYYY')
-  }, 100) 
+  }, 100);
 };
 
-Lobby.prototype.deleteRoom = function (roomId) {
+Lobby.prototype.deleteRoom = function(roomId) {
   delete this.battleRooms[roomId];
-}
+};
 
 module.exports = Lobby;
