@@ -5,20 +5,23 @@ module.exports = {
   entry: "./client/public/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: "/"
   },
   devServer: {
-    contentBase: "./client/public"
+    contentBase: "./client/public",
+    historyApiFallback: true
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?/,
         exclude: [/node_modules/],
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"]
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: ["babel-plugin-styled-components"]
           }
         }
       },
