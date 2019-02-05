@@ -11,7 +11,6 @@ Lobby.addToProcessQueue();
 Lobby.addToWaitingQue();
 Lobby.createRoom();
 
-// ws.eventNames("joined");
 setInterval(() => console.log(Lobby), 5000);
 
 ws.on("connection", (socket, req) => {
@@ -19,15 +18,19 @@ ws.on("connection", (socket, req) => {
   Lobby.addToGeneralQueue(socket);
 
   const waitStatus = setInterval(() => {
-    socket.send(socket.waitStatus);
+    socket.send({ type: "waitStatus", payload: socket.waitStatus });
+    if (socket.roomId) {
+      socket.send({type:'roomId', payload: socket.roomId});
+    }
   }, 1000);
 
   socket.on("message", data => {
     if (socket.roomId) {
       clearInterval(waitStatus);
-      Lobby.battleRooms[socket.roomId].forEach(player => {
+      Lobby.battleRooms[socket.roomId].players.forEach(player => {
         if (player !== socket) {
-          player.send(data);
+          // console.log(data);
+          player.send({type: 'code', payload: data});
         }
       });
     }

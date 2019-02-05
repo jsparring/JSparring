@@ -12,9 +12,13 @@ export const setUpSocket = username => {
     );
   };
 
+  // socket.on('rightSideCode', data=> console.log('************', data))
+  // socket.addEventListener('rightSideCode', (socket, event) => {
+  //   console.log(socket, event)
+  // })
   socket.onmessage = event => {
-    const data = JSON.parse(event.data);
-    console.log(data);
+    // const data = JSON.parse(event.data);
+    console.log('****************', event);
 
     // switch (data.type) {
     //   case types.JOINED:
@@ -26,8 +30,8 @@ export const setUpSocket = username => {
     //     break;
     //   default:
     //     break;
-    // }
-  };
+    }
+  // };
 
   return socket;
 };
@@ -45,7 +49,7 @@ function battleReducer(state = initialState, action) {
     case types.SAVE_LEFT_CODE:
       tempState = state.toJS();
       leftCode = action.payload;
-      console.log("===in reducer==", leftCode);
+      // console.log("===in reducer==", leftCode);
 
       socket = tempState.socket;
       socket.send(leftCode);

@@ -45,7 +45,7 @@ class BattlePage extends React.Component {
   }
 
   rightCode(editor, data, value) {
-    console.log("right code: ", value);
+    // console.log("right code: ", value);
   }
 
   componentDidMount() {
