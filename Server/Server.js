@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 const LobbyCntr = require('./Lobby.js');
+const util = require('./Server_Util.js');
 
 const ws = new WebSocket.Server({
   port: 8001,
@@ -10,36 +11,36 @@ const Lobby = new LobbyCntr();
 Lobby.addToProcessQueue();
 Lobby.addToWaitingQue();
 Lobby.createRoom();
+Lobby.removeRoom();
 
-setInterval(() => console.log(Lobby), 5000);
+// setInterval(() => console.log(Lobby), 5000);
 
-ws.on('connection', (socket, req) => {
+ws.on('connection', socket => {
   // console.log("connected", req.headers);
   Lobby.addToGeneralQueue(socket);
 
-  const waitStatus = setInterval(() => {
-    const status = {
-      type: 'waitStatus',
-      payload: socket.waitStatus
-    };
-    socket.send(JSON.stringify(status));
-    if (socket.roomId) {
-      const roomId = { type: 'roomId', payload: socket.roomId };
-      socket.send(JSON.stringify(roomId));
-    }
-  }, 1000);
+  util.sendStatus(socket);
 
   socket.on('message', data => {
-    if (socket.roomId) {
-      clearInterval(waitStatus);
-      Lobby.battleRooms[socket.roomId].players.forEach(player => {
-        if (player !== socket) {
-          // console.log(data);
-          const code = { type: 'code', payload: data };
-          player.send(JSON.stringify(code));
-        }
-      });
+    const { type, payload } = JSON.parse(data);
+    switch (type) {
+      case 'JOIN_ROOM': {
+        socket.userName = payload;
+        break;
+      }
+      case 'DESCRIPTION': {
+        util.sendMessages(socket, payload, 'DESCRIPTION');
+        break;
+      }
+      case 'CODE': {
+        util.sendMessages(socket, payload, 'CODE');
+        break;
+      }
+      default: {
+        console.log('unrecognized type');
+      }
     }
+
   });
 });
 
