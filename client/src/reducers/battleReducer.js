@@ -8,24 +8,26 @@ export const setUpSocket = (dispatch, username) => {
     socket.send(
       JSON.stringify({
         type: types.JOIN_ROOM,
-        username: username
+        payload: username
       })
     );
   };
 
-  // socket.on('rightSideCode', data=> console.log('************', data))
-  // socket.addEventListener('rightSideCode', (socket, event) => {
-  //   console.log(socket, event)
-  // })
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
     const type = data.type;
-    if (type === 'code') {
+    if (type === 'CODE') {
       dispatch(actions.writeCode(data.payload));
-    } else if (type === 'waitStatus') {
+    } else if (type === 'WAIT_STATUS') {
       //do something
-    } else if (type === 'roomId') {
-      //save room id to state
+    } else if (type === 'JOINED_ROOM') {
+      dispatch(actions.saveRoomId(data.payload));
+      dispatch(actions.getChallenge());
+    } else if (type === 'BANANAS') {
+      // opponent left room
+    } else if (type === 'DESCRIPTION') {
+      // dispatch action to save description to right side
+      dispatch(actions.populatRightDescription(data.payload));
     }
   };
   return socket;
@@ -33,7 +35,13 @@ export const setUpSocket = (dispatch, username) => {
 
 const initialState = fromJS({
   leftCode: '// its sparring day',
-  rightCode: '// its sparring day'
+  rightCode: '// its sparring day',
+  leftDescription: 'default left description from redux',
+  rightDescription: 'default right description from redux',
+  challengeName: '',
+  ideVisibility: 'hidden',
+  modalVisibility: 'visible',
+  oppUsername: ''
 });
 
 function battleReducer(state = initialState, action) {
@@ -43,6 +51,10 @@ function battleReducer(state = initialState, action) {
   let dispatch;
   let rightCode;
   let roomId;
+  let challengeName;
+  let modalVisibility;
+  let ideVisibility;
+  let oppUsername;
 
   switch (action.type) {
     case types.SAVE_LEFT_CODE:
@@ -50,7 +62,7 @@ function battleReducer(state = initialState, action) {
       leftCode = action.payload;
 
       socket = tempState.socket;
-      socket.send(leftCode);
+      socket.send(JSON.stringify({ type: 'CODE', payload: leftCode }));
 
       return fromJS({
         ...tempState,
@@ -78,12 +90,50 @@ function battleReducer(state = initialState, action) {
 
     case types.SAVE_ROOM_ID:
       tempState = state.toJS();
-      roomId = action.payload;
+
+      roomId = action.payload.roomIdx;
+      oppUsername = action.payload.username;
+      ideVisibility = 'visible';
+      modalVisibility = 'hidden';
+
+      console.log('ide: ', ideVisibility, 'modal: ', modalVisibility);
+      return fromJS({
+        ...tempState,
+        roomId,
+        ideVisibility,
+        modalVisibility,
+        oppUsername
+      });
+
+    case types.GOT_CHALLENGE:
+      tempState = state.toJS();
+      leftDescription = action.payload.description;
+      challengeName = action.payload.slug;
 
       return fromJS({
         ...tempState,
-        roomId
+        leftDescription,
+        challengeName
       });
+
+    case types.POPULATE_RIGHT_DESCRIPTION:
+      tempState = state.toJS();
+      rightDescription = action.payload;
+
+      return fromJS({
+        ...tempState,
+        rightDescription
+      });
+
+    case types.SOCKET_DESCRIPTION:
+      tempState = state.toJS();
+      socket = tempState.socket;
+      let socket_description = action.payload;
+      socket.send(
+        JSON.stringify({ type: 'DESCRIPTION', payload: socket_description })
+      );
+
+      break;
 
     default:
       return fromJS(state);

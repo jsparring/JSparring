@@ -1,0 +1,5 @@
+PORT=8002
+API_HOST=jsparring.cmpioovs14cz.us-east-2.rds.amazonaws.com
+API_USERNAME=jspar
+API_PASSWORD=ilovetesting
+API_PORT=2468
