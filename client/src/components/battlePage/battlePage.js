@@ -9,7 +9,7 @@ import * as battleActions from "../../actions/battleActions";
 import {
   PlayerContainer,
   DescriptionContainer,
-  VertLine
+  SubmitBtn
 } from "../styleComponents/styleComponents";
 
 const mapStateToProps = store => {
@@ -18,7 +18,9 @@ const mapStateToProps = store => {
     leftCode: state.leftCode,
     rightCode: state.rightCode,
     roomId: state.roomId,
-    description: state.description
+    leftDescription: state.leftDescription,
+    rightDescription: state.rightDescription,
+    challengeName: state.challengeName
   };
 };
 
@@ -32,6 +34,9 @@ const mapDispatchToProps = dispatch => {
     },
     joinRoom: username => {
       dispatch(battleActions.joinRoom(dispatch, username));
+    },
+    submitCode: (challengeName, code) => {
+      dispatch(battleActions.submitCode(challengeName, code))
     }
   };
 };
@@ -46,9 +51,6 @@ class BattlePage extends React.Component {
     this.props.saveLeftCode(value);
   }
 
-  rightCode(editor, data, value) {
-    // console.log("right code: ", value);
-  }
 
   componentDidMount() {
     this.props.joinRoom("angry_jellyfish666");
@@ -59,8 +61,10 @@ class BattlePage extends React.Component {
       <div>
         <h3>{this.props.roomId}</h3>
         <Head2headContainer>
-          <PlayerContainer>
-            <DescriptionContainer>{this.props.description}</DescriptionContainer>
+          <PlayerContainer id = 'leftPlayerContainer'>
+            <div className = "desc-cont">          
+             <DescriptionContainer>{this.props.leftDescription}</DescriptionContainer>
+            </div>
             <CodeMirror
               id="left-codemirror"
               value={this.props.leftCode}
@@ -72,15 +76,14 @@ class BattlePage extends React.Component {
               }}
               onChange={this.leftCode}
             />
-            <button onClick={() => this.props.testCode(this.props.leftCode)}>
-              Evaluate
-            </button>
+            <SubmitBtn onClick = {() => this.props.submitCode(this.props.challengeName, this.props.leftCode)}>SUBMIT</SubmitBtn>
           </PlayerContainer>
-          <VertLine />
-          <PlayerContainer>
+          <PlayerContainer id = "rightPlayerContainer">
+           <div className = "desc-cont">
             <DescriptionContainer>
-              This is also a description
-            </DescriptionContainer>
+              {this.props.right}
+              </DescriptionContainer>
+           </div>
             <CodeMirror
               id="right-codemirror"
               value={this.props.rightCode}

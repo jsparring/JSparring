@@ -5,7 +5,6 @@ export const LoginBody = styled.div`
   height: 100vh;
   width: 100%;
   font-family: "Ubuntu", sans-serif;
-
   position: relative;
 `;
 
@@ -30,6 +29,7 @@ export const Description = styled.p`
   font-family: "Ubuntu", sans-serif;
   color: white;
   text-align: center;
+  font-weight: bold;
 `;
 
 export const GithubButton = styled.button`
@@ -42,11 +42,16 @@ export const GithubButton = styled.button`
 export const Head2headContainer = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: 49% 2% 49%;
+  grid-template-columns: 50% 50%;
   grid-column-gap: 0px;
 `;
 
-export const PlayerContainer = styled.div``;
+export const PlayerContainer = styled.div`
+margin: 20px;
+border-radius: 10px;
+padding: 20px;
+background-color: #060411
+`;
 
 export const VertLine = styled.div`
   height: 100%;
@@ -56,6 +61,18 @@ export const VertLine = styled.div`
 export const DescriptionContainer = styled.div`
   width: 100%;
   height: 200px;
-  background-color: black;
+  background-color: #223954;
   color: white;
-`;
+  `;
+
+  export const SubmitBtn = styled.button`
+  padding: 10px;
+  background-color: #42afd0;
+  border: none;
+  margin-top: 10px;
+  border-radius: 2px;
+  color: white;
+  `
+
+  // border-top-left-radius: 10px;
+  // border-top-left-radius: 10px;

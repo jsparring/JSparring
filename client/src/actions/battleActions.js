@@ -47,11 +47,19 @@ export const getChallenge = () => {
     fetch("http://localhost:8002/getChallenge")
     .then(res => res.json())
     .then(json => {
-      dispatch(gotChallenge(json))
+      const description = json.description;
+      dispatch(socketsDescription(description));
+      dispatch(gotChallenge(json));
+
     })
     .catch(err => console.log(err))
   }
 }
+
+export const socketsDescription = (description) => ({
+  type: types.SOCKET_DESCRIPTION,
+  payload: description
+})
 
 export const getChallengeErr = () => ({
   type: types.GET_CHALLENGE_ERROR
@@ -60,4 +68,16 @@ export const getChallengeErr = () => ({
 export const gotChallenge = challenge => ({
   type: types.GOT_CHALLENGE,
   payload: challenge
+});
+
+export const submitCode = (challengeName,code) => {
+  return dispatch => {
+    console.log('CHALLENGE NAME: ', challengeName)
+    console.log('code: ', code)
+  }
+}
+
+export const populatRightDescription = description => ({
+  type: types.POPULATE_RIGHT_DESCRIPTION,
+  payload: description
 })

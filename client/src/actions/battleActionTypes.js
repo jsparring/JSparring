@@ -1,5 +1,12 @@
 export const SAVE_LEFT_CODE = "SAVE_LEFT_CODE";
+
 export const WRITE_CODE = "WRITE_CODE";
+
+export const POPULATE_RIGHT_DESCRIPTION = "POPULATE_RIGHT_DESCRIPTION";
+
+export const SUBMIT_CODE = "SUBMIT_CODE";
+
+export const SOCKET_DESCRIPTION = "SOCKET_DESCRIPTION"; 
 
 export const SAVE_ROOM_ID = "SAVE_ROOM_ID";
 
