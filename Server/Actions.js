@@ -5,10 +5,13 @@ function waitStatus(statusCode) {
   };
 }
 
-function roomId(roomIdx) {
+function joinedRoom(roomIdx, userName) {
   return {
-    type: 'ROOM_ID',
-    payload: roomIdx
+    type: 'JOINED_ROOM',
+    payload: {
+      roomIdx,
+      userName
+    }
   };
 }
 
@@ -29,7 +32,7 @@ function description(input) {
   return {
     type: 'DESCRIPTION',
     payload: input
-  }
+  };
 }
 
-module.exports = { waitStatus, roomId, code, otherPlayerLeft, description };
+module.exports = { waitStatus, joinedRoom, code, otherPlayerLeft, description };

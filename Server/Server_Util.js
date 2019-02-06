@@ -6,7 +6,10 @@ function sendStatus(socket) {
       const status = actions.waitStatus(socket.waitStatus);
       socket.send(JSON.stringify(status));
       if (socket.roomId) {
-        const roomId = actions.roomId(socket.roomId);
+        const roomId = actions.joinedRoom(
+          socket.roomId,
+          socket.opponent.userName
+        );
         socket.send(JSON.stringify(roomId));
         clearInterval(waitStatus);
       }
