@@ -2,38 +2,48 @@ const pool = require('../db');
 
 /*
 {
-  winner: player1,
-  loser: player2,
-  challenge,
+  winner: {
+    username: '',
+    challenge: ''
+  },
+  loser: {
+    username: '',
+    challenge: ''
+  }
 }
 */
 
 function createMatch(req, res, next) {
-  // Get player1, player2 and cid from req.body
   const { winner, loser } = req.body;
   pool
     .connect()
     .then(client => {
-      // Create new entry in matches table:
-      // - Insert player2, player2, and challenge
       client
         .query(
           `
         INSERT INTO matches(player1, player2)
-        VALUES('${winner}', '${loser}')
+        VALUES('${winner.username}', '${loser.username}')
         RETURNING matchid;
         `
         )
-        // Create new entry in wins table
-        // - Insert matchID, username (winner), challenge
-        // Create new entry in losses table
-        // - Insert username (loser), challenge
         .then(result => {
-          const matchID = result.rows.matchid;
+          const { matchid } = result.rows[0];
+          client
+            .query(
+              `
+          INSERT INTO wins(matchid, username, challenge)
+          VALUES('${matchid}', '${winner.username}', '${winner.challenge}');
+          INSERT INTO losses(matchid, username, challenge)
+          VALUES('${matchid}', '${loser.username}', '${loser.challenge}');
+          `
+            )
+            .then(() => {
+              res.status(200);
+              res.send('Created match');
+            })
+            .catch(error => error);
         })
-        .catch(error => {
-          console.error('Error writing to matches table: ', error);
-        });
+        .catch(error => error);
     })
     .catch(error => {
       console.error('Error connecting to db: ', error);

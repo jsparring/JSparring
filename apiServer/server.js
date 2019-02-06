@@ -7,35 +7,28 @@ const {
   createChallenge,
   createMatch,
   createUser,
-  getChallenge,
+  getChallengeClient,
   getChallenges,
   createTablesIfNotExists
 } = require('./controllers');
 
 app.use(bodyParser.json());
-app.use(cookieParser());
-
-/*
-	List of Controllers:
-	- deleteChallenge
-	- createMatch
-	- createWin
-	- createLoss
-	- addPlayed
-*/
 
 app.get('/', createMatch);
 
+app.get('/createuser', createUser);
 app.get('/createchallenge', createChallenge);
 app.get('/getchallenges', getChallenges);
+app.get('/getchallenge', getChallengeClient);
+app.get('/creatematch', createMatch);
 
 // Routes
-// createchallenge
-// getchallenges
-// getchallenge
-// createuser
-// creatematch
+// [x] createuser
+// [x] createchallenge
+// [x] getchallengeclient
+// [x] getchallenges
+// [x] creatematch
 
 app.listen(8002, () => {
-  console.log(`API server listening on port ${process.env.PORT}`);
+  console.log(`API server listening on port 8082`);
 });
