@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require('../db');
 
 /*
 - createUser:
@@ -13,7 +13,7 @@ async function createUser(req, res, next) {
   try {
     client = await pool.connect();
   } catch (error) {
-    return console.error("Error connecting to db client: ", error);
+    return console.error('Error connecting to db client: ', error);
   }
 
   try {
@@ -21,9 +21,9 @@ async function createUser(req, res, next) {
       `SELECT * FROM users WHERE username='${username}';`
     );
   } catch (error) {
-    console.error("Error querying database: ", error);
+    console.error('Error querying database: ', error);
     res.status(404);
-    res.send("Error connecting to database");
+    res.send('Error connecting to database');
   }
 
   if (result.rows.length === 0) {
@@ -32,15 +32,15 @@ async function createUser(req, res, next) {
         `INSERT INTO users VALUES ('${username}', '${token}');`
       );
       res.status(200);
-      res.send("New user created");
+      res.send('New user created');
     } catch (error) {
-      return console.error("Error writing to db:", error);
+      return console.error('Error writing to db:', error);
       res.status(404);
-      res.send("Error connecting to database");
+      res.send('Error connecting to database');
     }
   } else {
     res.status(400);
-    res.send("User already exists");
+    res.send('User already exists');
   }
 }
 

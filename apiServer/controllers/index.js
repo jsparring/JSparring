@@ -1,17 +1,15 @@
-const addPlayed = require("./addPlayed");
-const createChallenge = require("./createChallenge");
-const createLoss = require("./createLoss");
-const createMatch = require("./createMatch");
-const createUser = require("./createUser");
-const createWin = require("./createWin");
-const deleteChallenge = require("./deleteChallenge");
+const createChallenge = require('./createChallenge');
+const createMatch = require('./createMatch');
+const createUser = require('./createUser');
+const getChallenge = require('./getChallenge');
+const getChallenges = require('./getChallenges');
+const createTablesIfNotExists = require('./createTablesIfNotExists');
 
 module.exports = {
-  addPlayed,
   createChallenge,
-  createLoss,
   createMatch,
   createUser,
-  createWin,
-  deleteChallenge
+  getChallenge,
+  getChallenges,
+  createTablesIfNotExists
 };

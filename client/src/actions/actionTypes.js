@@ -1,5 +1,1 @@
-const UPDATE_INPUT = 'UPDATE_INFO';
-
-export {
-  UPDATE_INPUT
-};
+export const UPDATE_INPUT = "UPDATE_INFO";

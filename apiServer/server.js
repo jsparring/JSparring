@@ -1,17 +1,16 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const {
-  addPlayed,
   createChallenge,
-  createLoss,
   createMatch,
   createUser,
-  createWin,
-  deleteChallenge
-} = require("./controllers");
+  getChallenge,
+  getChallenges,
+  createTablesIfNotExists
+} = require('./controllers');
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -25,9 +24,17 @@ app.use(cookieParser());
 	- addPlayed
 */
 
-app.get("/", createChallenge, (req, res, next) => {
-  res.send("Hello universe");
-});
+app.get('/', createMatch);
+
+app.get('/createchallenge', createChallenge);
+app.get('/getchallenges', getChallenges);
+
+// Routes
+// createchallenge
+// getchallenges
+// getchallenge
+// createuser
+// creatematch
 
 app.listen(8002, () => {
   console.log(`API server listening on port ${process.env.PORT}`);
