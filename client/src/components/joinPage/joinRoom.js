@@ -28,7 +28,7 @@ class JoinRoom extends React.Component {
         <JoinRoomContainer>
           <WelcomeHeader>Player One, are you ready?</WelcomeHeader>
           <Link to="/battle">
-            <JoinRoomButton>Battle To The Death</JoinRoomButton>
+            <JoinRoomButton>Battle to The Death</JoinRoomButton>
           </Link>
         </JoinRoomContainer>
       </JoinRoomBody>

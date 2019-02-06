@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const JoinRoomBody = styled.div`
   height: 100vh;
@@ -16,6 +16,9 @@ export const JoinRoomContainer = styled.div`
 export const JoinRoomButton = styled.button`
   color: red;
   padding: 20px;
+  font-family: 'Press Start 2P', cursive;
 `;
 
-export const WelcomeHeader = styled.h1``;
+export const WelcomeHeader = styled.h1`
+  font-family: 'Press Start 2P', cursive;
+`;

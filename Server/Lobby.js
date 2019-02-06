@@ -5,55 +5,69 @@ function Lobby() {
   this.processQueue = [];
   this.generalQueue = [];
   this.battleRooms = {};
-};
+}
 
-Lobby.prototype.addToGeneralQueue = function(player) {
+Lobby.prototype.addToGeneralQueue = function addToGeneralQueue(player) {
   player.waitStatus = 0;
   this.generalQueue.push(player);
 };
 
-Lobby.prototype.addToProcessQueue = function() {
+Lobby.prototype.addToProcessQueue = function addToProcessQueue() {
   const that = this;
   setInterval(() => {
     while (that.generalQueue.length !== 0) {
       const temp = that.generalQueue.pop();
+      if (temp.readyState === 3) {
+        continue;
+      }
       temp.waitStatus = 1;
       that.processQueue.push(temp);
     }
   }, 500);
 };
 
-Lobby.prototype.addToWaitingQue = function() {
+Lobby.prototype.addToWaitingQue = function addToWaitingQue() {
   const that = this;
   setInterval(() => {
     while (that.waitingQueue.length < 2 && that.processQueue.length > 0) {
       const temp = that.processQueue.pop();
+      if (temp.readyState === 3) {
+        continue;
+      }
       temp.waitStatus = 2;
       that.waitingQueue.push(temp);
     }
   }, 1000);
 };
 
-Lobby.prototype.createRoom = function() {
+Lobby.prototype.createRoom = function createRoom() {
   const that = this;
   let counter = Date.now();
   setInterval(() => {
     if (that.waitingQueue.length === 2) {
       const key = counter++;
-      const playerOne = that.waitingQueue.pop();
-      playerOne.waitStatus = 3;
-      playerOne.roomId = key;
-      const playerTwo = that.waitingQueue.pop();
-      playerTwo.waitStatus = 3;
-      playerTwo.roomId = key;
-      that.battleRooms[key] = new Room([playerOne, playerTwo]);
+      const playerX = that.waitingQueue.pop();
+      const playerY = that.waitingQueue.pop();
+      playerX.waitStatus = 3;
+      playerX.roomId = key;
+      playerX.opponent = playerY;
+      playerY.waitStatus = 3;
+      playerY.roomId = key;
+      playerY.opponent = playerX;
+      that.battleRooms[key] = new Room(playerX, playerY, key);
     }
-    // console.log('RUNNING THE LOBBBBBYYYYY')
   }, 100);
 };
 
-Lobby.prototype.deleteRoom = function(roomId) {
-  delete this.battleRooms[roomId];
+Lobby.prototype.removeRoom = function removeRoom() {
+  const that = this;
+  setInterval(() => {
+    Object.values(that.battleRooms).forEach(room => {
+      console.log(room.playerX.readyState, room.playerY.readyState);
+      if (room.playerX.readyState === 3 && room.playerY.readyState === 3) {
+        delete that.battleRooms[room.key];
+      }
+    });
+  }, 5000);
 };
-
 module.exports = Lobby;
