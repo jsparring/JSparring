@@ -13,10 +13,6 @@ export const setUpSocket = (dispatch, username) => {
     );
   };
 
-  // socket.on('rightSideCode', data=> console.log('************', data))
-  // socket.addEventListener('rightSideCode', (socket, event) => {
-  //   console.log(socket, event)
-  // })
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
     const type = data.type;
@@ -25,7 +21,10 @@ export const setUpSocket = (dispatch, username) => {
     } else if (type === 'waitStatus') {
       //do something
     } else if (type === 'roomId') {
-      //save room id to state
+      dispatch(actions.saveRoomId(data.payload));
+      dispatch(actions.getChallenge());
+    } else if(type === 'bananas'){
+      // opponent left room
     }
   };
   return socket;
@@ -33,7 +32,8 @@ export const setUpSocket = (dispatch, username) => {
 
 const initialState = fromJS({
   leftCode: '// its sparring day',
-  rightCode: '// its sparring day'
+  rightCode: '// its sparring day',
+  description: 'default description from redux'
 });
 
 function battleReducer(state = initialState, action) {
@@ -43,6 +43,8 @@ function battleReducer(state = initialState, action) {
   let dispatch;
   let rightCode;
   let roomId;
+  let description;
+  let challengeName;
 
   switch (action.type) {
     case types.SAVE_LEFT_CODE:
@@ -85,6 +87,17 @@ function battleReducer(state = initialState, action) {
         roomId
       });
 
+    case types.GOT_CHALLENGE:
+      tempState = state.toJS();
+      description = action.payload.description;
+      challengeName = action.payload.slug;
+
+      return fromJS({
+        ...tempState,
+        description,
+        challengeName
+      })
+    
     default:
       return fromJS(state);
   }

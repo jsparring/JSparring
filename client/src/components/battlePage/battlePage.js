@@ -17,7 +17,8 @@ const mapStateToProps = store => {
   return {
     leftCode: state.leftCode,
     rightCode: state.rightCode,
-    roomId: state.roomId
+    roomId: state.roomId,
+    description: state.description
   };
 };
 
@@ -42,7 +43,6 @@ class BattlePage extends React.Component {
   }
 
   leftCode(editor, data, value) {
-    // console.log("left code: ", value);
     this.props.saveLeftCode(value);
   }
 
@@ -60,7 +60,7 @@ class BattlePage extends React.Component {
         <h3>{this.props.roomId}</h3>
         <Head2headContainer>
           <PlayerContainer>
-            <DescriptionContainer>this is a description</DescriptionContainer>
+            <DescriptionContainer>{this.props.description}</DescriptionContainer>
             <CodeMirror
               id="left-codemirror"
               value={this.props.leftCode}

@@ -10,3 +10,7 @@ export const JOINED = "JOINED";
 export const TEST_RETURNED = "TEST_RETURNED";
 
 export const TEST_FAILED = "TEST_FAILED";
+
+export const GOT_CHALLENGE = "GOT_CHALLENGES"
+
+export const GET_CHALLENGE_ERROR = "GET_CHALLENGE_ERROR"; 
