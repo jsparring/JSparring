@@ -4,11 +4,12 @@
   "description": "Head-to-head algorithm's",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "webpack": "webpack --mode development",
     "client-dev-server": "nodemon clientServer/server.js",
     "WSServer": "nodemon Server/Server.js",
-    "webpack-server": "webpack-dev-server --hot --open"
+    "webpack-server": "webpack-dev-server --hot --open",
+    "testServer": "nodemon testServer/server.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,13 @@
   },
   "homepage": "https://github.com/01212/JSparring#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "codemirror": "^5.43.0",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "immutable": "^4.0.0-rc.12",
+    "jasmine": "^3.3.1",
+    "node-fetch": "^2.3.0",
     "react": "^16.7.0",
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.7.0",
@@ -51,7 +56,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "install": "^0.12.2",
     "nodemon": "^1.18.9",
+    "npm": "^6.7.0",
     "prettier": "^1.16.4",
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.8",
