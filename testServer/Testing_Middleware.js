@@ -6,12 +6,10 @@ const { StringDecoder } = require('string_decoder');
 
 const decoder = new StringDecoder('utf-8');
 
-exports.mock = function(n) {
-  return n * 2;
-};
 
 exports.test = {
   runTest: (req, res, next) => {
+    exports.callback = jsonFn.parse(req.body);
     const testing = spawn(
       `node ${path.join(__dirname, '/multiplyBy2.js')}`,
       { cwd: __dirname, sdio: 'inherit', shell: true }

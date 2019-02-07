@@ -1,12 +1,10 @@
 function TestBody() {
   this.tests = [];
-  this.passed = true;
+  this.passed = null;
 }
 
-function IndividualTest(description, input, output, expectedOutput) {
-  this.input = input;
-  this.output = output;
-  this.expectedOutput = expectedOutput;
+function IndividualTest(message) {
+    this.message = message;
 }
 
 module.exports = { TestBody, IndividualTest };

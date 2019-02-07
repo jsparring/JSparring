@@ -6,8 +6,6 @@ const jasmine = new Jasmine();
 
 const body = new TestBody();
 
-const callback = mock;
-
 // console.log(typeof process.argv[2]);
 
 // console.log(require('./Testing_Middleware.js'));
@@ -17,11 +15,11 @@ const reporter = {
   suiteDone: result => console.log(result),
   specDone: result => {
     console.log(result);
-    if(result.status === 'failed') {
+    if (result.status === 'failed') {
       // const spec = new IndividualTest()
       result.failedExpectations.forEach(test => {
-        body.tests.push(new IndividualTest(test.message))
-      })
+        body.tests.push(new IndividualTest(test.message));
+      });
     }
   },
   jasmineDone: result => {
@@ -36,32 +34,27 @@ const reporter = {
 
 jasmine.loadConfig({
   spec_dir: 'spec',
-  spec_files: ['multiplyBy2.js']
+  spec_files: ['pillars.js']
 });
 
 jasmine.addReporter(reporter);
 
-/* this is the standard solutoin */
-
-const input = Math.floor(Math.random() * 99999);
-
-function standard(n) {
-  return n * 2;
+function standard(num_pill, dist, width) {
+  // your code here
+  let pillarCount = 1;
+  let distance = 0;
+  while (pillarCount < num_pill) {
+    if (pillarCount === num_pill - 1) {
+      distance -= width;
+    }
+    distance = distance + dist * 100 + width;
+    pillarCount++;
+  }
+  return distance;
 }
 
-// this is the jasmine test
-
-describe('testing multiplyBy2', () => {
-  it('it should equal', () => {
-    console.log('*****', input);
-    expect(callback(Math.floor(Math.random() * 99999))).toBe(standard(input));
-    expect(callback(Math.floor(Math.random() * 99999))).toBe(standard(input));
+describe('run some tests', () => {
+  it('should equal', () => {
+    expect(callback()).toBe(standard());
   });
 });
-
-function exec() {
-  jasmine.execute();
-  return body;
-}
-
-exec();
