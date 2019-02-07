@@ -3,7 +3,7 @@ const pool = require('../db');
 const queryString = `
 CREATE TABLE IF NOT EXISTS users(
 	username varchar(64) PRIMARY KEY NOT NULL,
-	token varchar(16)
+	password varchar(16) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS challenges(
 	challenge varchar(64) PRIMARY KEY NOT NULL,

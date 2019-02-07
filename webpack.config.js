@@ -10,7 +10,13 @@ module.exports = {
   },
   devServer: {
     contentBase: "./client/public",
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/user': {
+        target: 'http://localhost:8000'
+      }
+
+    }
   },
   module: {
     rules: [
