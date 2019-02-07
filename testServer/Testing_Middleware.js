@@ -1,44 +1,25 @@
-const runTest = require('./Testing.js');
-// const { execSync } = require('child_process');
-// const path = require('path');
+// const runTest = require('./Testing.js');
+const { spawn } = require('child_process');
+const path = require('path');
+const jsonFn = require('json-fn');
+const { StringDecoder } = require('string_decoder');
 
-const mock = function(n) {
+const decoder = new StringDecoder('utf-8');
+
+exports.mock = function(n) {
   return n * 2;
 };
 
-const test = {
+exports.test = {
   runTest: (req, res, next) => {
-    // console.log('hereeererere')
-    const { multiplyBy2 } = res.locals;
-    const body = runTest(
-      mock,
-      multiplyBy2.testDescriptions,
-      multiplyBy2.tests,
-      multiplyBy2.expectedOutput
+    const testing = spawn(
+      `node ${path.join(__dirname, '/multiplyBy2.js')}`,
+      { cwd: __dirname, sdio: 'inherit', shell: true }
     );
-    // let i = 0;
-    // while (i < multiplyBy2.tests.length) {
-    //   const temp = execSync(
-    //     `node ${path.join(__dirname, '/Testing.js')}`,
-    //     [
-    //       mock,
-    //       multiplyBy2.testDescriptions[i],
-    //       multiplyBy2.tests[i],
-    //       multiplyBy2.expectedOutput[i]
-    //     ],
-    //     { cwd: __dirname }
-    //   );
-    //   console.log(temp);
 
-      // temp.stdout.on('data', chunk => console.log(chunk));
+    testing.stdout.on('data', data => console.log(decoder.write(data)));
+    testing.stderr.on('data', err => console.log(decoder.write(err)));
 
-      // temp.stderr.on('data', err => console.log(err));
-
-    //   i += 1;
-    // }
-
-    res.send(body);
+    res.send();
   }
 };
-
-module.exports = test;

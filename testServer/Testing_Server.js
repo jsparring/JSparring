@@ -1,7 +1,7 @@
 const Express = require('express');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser');
-const test = require('./Testing_Middleware.js');
+const { test } = require('./Testing_Middleware.js');
 
 const app = new Express();
 
