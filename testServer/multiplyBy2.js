@@ -2,6 +2,8 @@ const Jasmine = require('jasmine');
 const { TestBody, IndividualTest } = require('./Test_Body_Constructors.js');
 const { callback } = require('./Testing_Middleware.js');
 
+console.log(require('./Testing_Middleware.js'));
+
 const jasmine = new Jasmine();
 
 const body = new TestBody();

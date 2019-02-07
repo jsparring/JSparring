@@ -70,12 +70,12 @@ export const submitCode = (challengeName, code) => {
 
     const func = JSONfn.stringify(code);
 
-    fetch(`https://localhost:8003/runtest`, {
+    fetch(`http://localhost:8003/runtest/multiplyBy2`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: { func, challengeName }
+      body: func
     })
       .then(res => res.json())
       .then(json => {

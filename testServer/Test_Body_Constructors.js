@@ -4,7 +4,7 @@ function TestBody() {
 }
 
 function IndividualTest(message) {
-    this.message = message;
+  this.message = message;
 }
 
 module.exports = { TestBody, IndividualTest };
