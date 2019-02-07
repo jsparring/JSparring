@@ -6,10 +6,6 @@ const jasmine = new Jasmine();
 
 const body = new TestBody();
 
-// console.log(typeof process.argv[2]);
-
-// console.log(require('./Testing_Middleware.js'));
-
 const reporter = {
   jasmineStarted: info => console.log(info),
   suiteDone: result => console.log(result),
@@ -39,22 +35,31 @@ jasmine.loadConfig({
 
 jasmine.addReporter(reporter);
 
-function standard(num_pill, dist, width) {
-  // your code here
+function standard(numPill, dist, width) {
   let pillarCount = 1;
   let distance = 0;
-  while (pillarCount < num_pill) {
-    if (pillarCount === num_pill - 1) {
+  while (pillarCount < numPill) {
+    if (pillarCount === numPill - 1) {
       distance -= width;
     }
     distance = distance + dist * 100 + width;
-    pillarCount++;
+    pillarCount += 1;
   }
   return distance;
 }
 
+const random = n => Math.floor(Math.random() * n);
+
 describe('run some tests', () => {
   it('should equal', () => {
-    expect(callback()).toBe(standard());
+    expect(callback(random(30), random(30))).toBe(standard(50));
+    expect(callback(random(20), random(30))).toBe(standard(50));
   });
 });
+
+function exec() {
+  jasmine.execute();
+  return body;
+}
+
+exec();
