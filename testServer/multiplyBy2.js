@@ -6,12 +6,6 @@ const jasmine = new Jasmine();
 
 const body = new TestBody();
 
-const callback = mock;
-
-// console.log(typeof process.argv[2]);
-
-// console.log(require('./Testing_Middleware.js'));
-
 const reporter = {
   jasmineStarted: info => console.log(info),
   suiteDone: result => console.log(result),
