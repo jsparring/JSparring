@@ -11,6 +11,7 @@
     "webpack-server": "webpack-dev-server --hot",
     "api-server": "nodemon apiServer/server.js",
     "one-ring-dev": "npx npm-run-all --parallel api-server webpack-server WSServer testServer",
+    "one-ring": "npx npm-run-all --parallel api-server client-dev-server WSServer testServer",
     "testServer": "nodemon testServer/Testing_Server.js"
   },
   "repository": {

@@ -35,7 +35,6 @@ export const testReturned = response => ({
 
 export const getChallenge = () => {
   return dispatch => {
-    console.log('GETTING CHALLENGE =======================');
     fetch('http://localhost:8002/getchallenge')
       .then(res => {
         return res.json();
@@ -69,12 +68,14 @@ export const submitCode = (challengeName, code) => {
     //use json fn on code
     // put challenge name as a query param
 
-    fetch(`https://localhost:8003/runtest?challengename=${challengeName}`, {
+    const func = JSONfn.stringify(code);
+
+    fetch(`https://localhost:8003/runtest`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSONfn.stringify(code)
+      body: { func, challengeName }
     })
       .then(res => res.json())
       .then(json => {

@@ -118,8 +118,7 @@ function battleReducer(state = initialState, action) {
     case types.GOT_CHALLENGE:
       tempState = state.toJS();
       leftDescription = action.payload.description;
-      challengeName = action.payload.slug;
-
+      challengeName = action.payload.challenge;
       return fromJS({
         ...tempState,
         leftDescription,

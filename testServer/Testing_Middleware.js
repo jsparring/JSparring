@@ -6,14 +6,14 @@ const { StringDecoder } = require('string_decoder');
 
 const decoder = new StringDecoder('utf-8');
 
-
 exports.test = {
   runTest: (req, res, next) => {
-    exports.callback = jsonFn.parse(req.body);
-    const testing = spawn(
-      `node ${path.join(__dirname, '/multiplyBy2.js')}`,
-      { cwd: __dirname, sdio: 'inherit', shell: true }
-    );
+    exports.callback = jsonFn.parse(req.body.func);
+    const testing = spawn(`node ${path.join(__dirname, '/multiplyBy2.js')}`, {
+      cwd: __dirname,
+      sdio: 'inherit',
+      shell: true
+    });
 
     testing.stdout.on('data', data => console.log(decoder.write(data)));
     testing.stderr.on('data', err => console.log(decoder.write(err)));

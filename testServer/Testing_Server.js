@@ -39,6 +39,6 @@ app.use((req, res, next) => {
 //   .then(() => console.log(cache))
 //   .catch(err => console.log(err));
 
-app.post('/runtest/*', test.runTest);
+app.post('/runtest', test.runTest);
 
 app.listen(process.env.PORT || 8003);
