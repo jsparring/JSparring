@@ -9,9 +9,9 @@
     "client-dev-server": "nodemon clientServer/server.js",
     "WSServer": "nodemon Server/Server.js",
     "webpack-server": "webpack-dev-server --hot",
-    "testServer": "nodemon testServer/server.js",
     "api-server": "nodemon apiServer/server.js",
-    "one-ring-dev": "npx npm-run-all --parallel api-server webpack-server WSServer"
+    "one-ring-dev": "npx npm-run-all --parallel api-server webpack-server WSServer testServer",
+    "testServer": "nodemon testServer/Testing_Server.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "node-fetch": "^2.3.0",
     "nodemon": "^1.18.9",
     "pg": "^7.8.0",
+    "path": "^0.12.7",
     "react": "^16.7.0",
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.7.0",
