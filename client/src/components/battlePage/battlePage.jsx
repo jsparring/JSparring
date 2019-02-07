@@ -30,7 +30,8 @@ const mapStateToProps = store => {
     challengeName: state.challengeName,
     ideVisibility: state.ideVisibility,
     modalVisibility: state.modalVisibility,
-    oppUsername: state.oppUsername
+    username: state.username,
+    opponentUsername: state.opponentUsername
   };
 };
 
@@ -76,7 +77,7 @@ class BattlePage extends React.Component {
         </LoadingModal>
         <Head2headContainer style={{ visibility: this.props.ideVisibility }}>
           <PlayerContainer id="leftPlayerContainer">
-            <UsernameDisplay>PLAYER1</UsernameDisplay>
+            <UsernameDisplay>{this.props.username}</UsernameDisplay>
             <div className="desc-cont">
               <DescriptionContainer>
                 {this.props.leftDescription}
@@ -105,9 +106,11 @@ class BattlePage extends React.Component {
             </SubmitBtn>
           </PlayerContainer>
           <PlayerContainer id="rightPlayerContainer">
-            <UsernameDisplay>{this.props.oppUsername}</UsernameDisplay>
+            <UsernameDisplay>{this.props.opponentUsername}</UsernameDisplay>
             <div className="desc-cont">
-              <DescriptionContainer>{this.props.right}</DescriptionContainer>
+              <DescriptionContainer>
+                {this.props.rightDescription}
+              </DescriptionContainer>
             </div>
             <CodeMirror
               id="right-codemirror"

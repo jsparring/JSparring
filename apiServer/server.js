@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const {
   createChallenge,
@@ -13,6 +13,7 @@ const {
 } = require('./controllers');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/', createMatch);
 

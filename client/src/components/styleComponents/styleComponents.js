@@ -108,7 +108,7 @@ export const GifImg = styled.img`
   margin: 0 auto;
 `;
 
-export const UsernameDisplay = styled.h2`
+export const UsernameDisplay = styled.p`
   color: white;
   font-family: 'Press Start 2P', cursive;
   text-align: center;

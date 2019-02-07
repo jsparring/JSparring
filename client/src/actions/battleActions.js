@@ -1,6 +1,6 @@
-import * as types from "./battleActionTypes";
-import { setUpSocket } from "../reducers/battleReducer";
-import { globalAgent } from "http";
+import * as types from './battleActionTypes';
+import { setUpSocket } from '../reducers/battleReducer';
+import { globalAgent } from 'http';
 
 export const saveLeftCode = input => ({
   type: types.SAVE_LEFT_CODE,
@@ -25,7 +25,6 @@ export const saveRoomId = id => ({
 export const testCode = code => {
   return dispatch => {
     // server not set up
-
     // fetch("http://localhost:8002/test")
     //   .then(res => res.json())
     //   .then(json => dispatch(testReturned(json)))
@@ -44,40 +43,43 @@ export const testReturned = response => ({
 
 export const getChallenge = () => {
   return dispatch => {
-    fetch("http://localhost:8002/getChallenge")
-    .then(res => res.json())
-    .then(json => {
-      const description = json.description;
-      dispatch(socketsDescription(description));
-      dispatch(gotChallenge(json));
+    console.log('GETTING CHALLENGE =======================');
+    fetch('http://localhost:8002/getchallenge')
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        const description = json.description;
+        dispatch(socketsDescription(description));
+        dispatch(gotChallenge(json));
+      })
+      .catch(err => console.log(err));
+  };
+};
 
-    })
-    .catch(err => console.log(err))
-  }
-}
-
-export const socketsDescription = (description) => ({
+export const socketsDescription = description => ({
   type: types.SOCKET_DESCRIPTION,
   payload: description
-})
+});
 
 export const getChallengeErr = () => ({
   type: types.GET_CHALLENGE_ERROR
-})
+});
 
 export const gotChallenge = challenge => ({
   type: types.GOT_CHALLENGE,
   payload: challenge
 });
 
-export const submitCode = (challengeName,code) => {
+export const submitCode = (challengeName, code) => {
+  // send code to test server
   return dispatch => {
-    console.log('CHALLENGE NAME: ', challengeName)
-    console.log('code: ', code)
-  }
-}
+    console.log('CHALLENGE NAME: ', challengeName);
+    console.log('code: ', code);
+  };
+};
 
 export const populatRightDescription = description => ({
   type: types.POPULATE_RIGHT_DESCRIPTION,
   payload: description
-})
+});

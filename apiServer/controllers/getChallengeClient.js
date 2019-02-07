@@ -1,7 +1,8 @@
 const pool = require('../db');
 
 function getChallengeClient(req, res, next) {
-  const { tier } = req.body;
+  // const { tier } = req.body;
+  const tier = 8;
 
   // Uncomment to randomize tier if tier is not defined
   // const tier =
@@ -21,6 +22,7 @@ function getChallengeClient(req, res, next) {
           // send it back in response
           res.status(200);
           res.setHeader('content-type', 'application/json');
+          console.log('====', challenge, '***', description);
           res.send(
             JSON.stringify({
               challenge,

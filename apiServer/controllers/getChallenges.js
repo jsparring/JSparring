@@ -22,6 +22,7 @@ function getChallenges(req, res, next) {
           );
           res.status(200);
           res.setHeader('content-type', 'application/json');
+          console.log('====CHALLENGES====', jsonChallenges);
           res.send(JSON.stringify(jsonChallenges));
         })
         .catch(error => error);

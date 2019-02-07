@@ -36,12 +36,13 @@ export const setUpSocket = (dispatch, username) => {
 const initialState = fromJS({
   leftCode: '// its sparring day',
   rightCode: '// its sparring day',
-  leftDescription: 'default left description from redux',
-  rightDescription: 'default right description from redux',
+  leftDescription: '',
+  rightDescription: '',
   challengeName: '',
   ideVisibility: 'hidden',
   modalVisibility: 'visible',
-  oppUsername: ''
+  opponentName: 'player 2',
+  username: 'angry_jellyfish666'
 });
 
 function battleReducer(state = initialState, action) {
@@ -49,12 +50,13 @@ function battleReducer(state = initialState, action) {
   let leftCode;
   let socket;
   let dispatch;
+  let leftDescription;
+  let rightDescription;
   let rightCode;
   let roomId;
   let challengeName;
   let modalVisibility;
   let ideVisibility;
-  let oppUsername;
 
   switch (action.type) {
     case types.SAVE_LEFT_CODE:
@@ -92,7 +94,6 @@ function battleReducer(state = initialState, action) {
       tempState = state.toJS();
 
       roomId = action.payload.roomIdx;
-      oppUsername = action.payload.username;
       ideVisibility = 'visible';
       modalVisibility = 'hidden';
 
@@ -101,8 +102,7 @@ function battleReducer(state = initialState, action) {
         ...tempState,
         roomId,
         ideVisibility,
-        modalVisibility,
-        oppUsername
+        modalVisibility
       });
 
     case types.GOT_CHALLENGE:
@@ -132,6 +132,8 @@ function battleReducer(state = initialState, action) {
       socket.send(
         JSON.stringify({ type: 'DESCRIPTION', payload: socket_description })
       );
+
+      return fromJS({ ...tempState });
 
       break;
 

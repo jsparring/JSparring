@@ -8,8 +8,10 @@
     "webpack": "webpack --mode development",
     "client-dev-server": "nodemon clientServer/server.js",
     "WSServer": "nodemon Server/Server.js",
-    "webpack-server": "webpack-dev-server --hot --open",
-    "testServer": "nodemon testServer/server.js"
+    "webpack-server": "webpack-dev-server --hot",
+    "testServer": "nodemon testServer/server.js",
+    "api-server": "nodemon apiServer/server.js",
+    "one-ring-dev": "npx npm-run-all --parallel api-server webpack-server WSServer"
   },
   "repository": {
     "type": "git",
@@ -27,11 +29,11 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "nodemon": "^1.18.9",
-    "pg": "^7.8.0",
     "immutable": "^4.0.0-rc.12",
     "jasmine": "^3.3.1",
     "node-fetch": "^2.3.0",
+    "nodemon": "^1.18.9",
+    "pg": "^7.8.0",
     "react": "^16.7.0",
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.7.0",
@@ -42,6 +44,7 @@
     "redux": "^4.0.1",
     "redux-saga": "^1.0.1",
     "redux-thunk": "^2.3.0",
+    "run-all": "^1.0.1",
     "styled-components": "^4.1.3",
     "websocket": "^1.0.28",
     "ws": "^6.1.3"
