@@ -114,5 +114,35 @@ export const UsernameDisplay = styled.p`
   text-align: center;
 `;
 
-// border-top-left-radius: 10px;
-// border-top-left-radius: 10px;
+export const YouLoseContainer = styled.div`
+  background-color: #2f2f2f;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+`;
+
+export const YouLoseContent = styled.div`
+  height: fit-content;
+  width: 60%;
+  background-color: black;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+`;
+
+export const YouLoseImage = styled.img`
+  width: 50%;
+`;
+
+export const YouLoseHead = styled.h1`
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+`;
+
+export const ResultText = styled.h3`
+  font-family: 'Press Start 2P', cursive;
+  color: red;
+`;

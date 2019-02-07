@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import './codemirror.css';
 import * as battleActions from '../../actions/battleActions';
+// import YouLose from './youLose.jsx';
 
 import {
   Head2headContainer,
@@ -13,7 +14,12 @@ import {
   ModalContent,
   ModalHeader,
   GifImg,
-  UsernameDisplay
+  UsernameDisplay,
+  YouLoseContainer,
+  YouLoseContent,
+  YouLoseHead,
+  YouLoseImage,
+  ResultText
 } from '../styleComponents/styleComponents';
 
 require('codemirror/mode/xml/xml');
@@ -30,8 +36,13 @@ const mapStateToProps = store => {
     challengeName: state.challengeName,
     ideVisibility: state.ideVisibility,
     modalVisibility: state.modalVisibility,
+    youLoseVisibility: state.youLoseVisibility,
     username: state.username,
-    opponentUsername: state.opponentUsername
+    opponentUsername: state.opponentUsername,
+    passedTests: state.passedTests,
+    resultPicture: state.resultPicture,
+    resultHeader: state.resultHeader,
+    resultText: state.resultText
   };
 };
 
@@ -40,14 +51,14 @@ const mapDispatchToProps = dispatch => {
     saveLeftCode: value => {
       dispatch(battleActions.saveLeftCode(value));
     },
-    testCode: code => {
-      dispatch(battleActions.testCode(code));
-    },
     joinRoom: username => {
       dispatch(battleActions.joinRoom(dispatch, username));
     },
     submitCode: (challengeName, code) => {
       dispatch(battleActions.submitCode(challengeName, code));
+    },
+    test: () => {
+      dispatch(battleActions.passedTests('xyz'));
     }
   };
 };
@@ -75,6 +86,14 @@ class BattlePage extends React.Component {
             <GifImg src="https://thumbs.gfycat.com/FrayedSeriousIchneumonfly.webp" />
           </ModalContent>
         </LoadingModal>
+
+        <YouLoseContainer style={{ visibility: this.props.youLoseVisibility }}>
+          <YouLoseContent>
+            <YouLoseHead>YOU LOSE</YouLoseHead>
+            <YouLoseImage src={this.props.resultPicture} />
+          </YouLoseContent>
+        </YouLoseContainer>
+
         <Head2headContainer style={{ visibility: this.props.ideVisibility }}>
           <PlayerContainer id="leftPlayerContainer">
             <UsernameDisplay>{this.props.username}</UsernameDisplay>
@@ -104,6 +123,7 @@ class BattlePage extends React.Component {
             >
               SUBMIT
             </SubmitBtn>
+            <ResultText>{this.props.resultText}</ResultText>
           </PlayerContainer>
           <PlayerContainer id="rightPlayerContainer">
             <UsernameDisplay>{this.props.opponentUsername}</UsernameDisplay>

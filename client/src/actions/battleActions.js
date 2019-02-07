@@ -2,6 +2,8 @@ import * as types from './battleActionTypes';
 import { setUpSocket } from '../reducers/battleReducer';
 import { globalAgent } from 'http';
 
+import JSONfn from 'json-fn';
+
 export const saveLeftCode = input => ({
   type: types.SAVE_LEFT_CODE,
   payload: input
@@ -21,16 +23,6 @@ export const saveRoomId = id => ({
   type: types.SAVE_ROOM_ID,
   payload: id
 });
-
-export const testCode = code => {
-  return dispatch => {
-    // server not set up
-    // fetch("http://localhost:8002/test")
-    //   .then(res => res.json())
-    //   .then(json => dispatch(testReturned(json)))
-    //   .catch(err => dispatch(testFailed(err)));
-  };
-};
 
 export const testFailed = () => ({
   type: types.TEST_FAILED
@@ -74,10 +66,43 @@ export const gotChallenge = challenge => ({
 export const submitCode = (challengeName, code) => {
   // send code to test server
   return dispatch => {
+    //use json fn on code
+    // put challenge name as a query param
+
+    fetch(`https://localhost:8003/runtest?challengename=${challengeName}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSONfn.stringify(code)
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.passed === true) {
+          // you win!
+        } else {
+          // you did not pass tests
+        }
+      })
+      .catch(err => console.log(err));
     console.log('CHALLENGE NAME: ', challengeName);
     console.log('code: ', code);
   };
 };
+
+export const passedTests = tests => ({
+  type: types.PASSED_TESTS,
+  payload: tests
+});
+
+export const failedTests = tests => ({
+  type: types.FAILED_TESTS,
+  payload: tests
+});
+
+export const loser = () => ({
+  type: types.LOSER
+});
 
 export const populatRightDescription = description => ({
   type: types.POPULATE_RIGHT_DESCRIPTION,

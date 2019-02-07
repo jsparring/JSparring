@@ -28,6 +28,8 @@ export const setUpSocket = (dispatch, username) => {
     } else if (type === 'DESCRIPTION') {
       // dispatch action to save description to right side
       dispatch(actions.populatRightDescription(data.payload));
+    } else if (type === 'LOSE') {
+      dispatch(actions.loser());
     }
   };
   return socket;
@@ -40,9 +42,14 @@ const initialState = fromJS({
   rightDescription: '',
   challengeName: '',
   ideVisibility: 'hidden',
+  youLoseVisibility: 'hidden',
   modalVisibility: 'visible',
   opponentName: 'player 2',
-  username: 'angry_jellyfish666'
+  username: 'angry_jellyfish666',
+  passedTests: false,
+  resultPicture: 'https://thumbs.gfycat.com/ApprehensiveOddballAgama-small.gif',
+  resultHeader: 'YOU LOSE!',
+  resultText: ''
 });
 
 function battleReducer(state = initialState, action) {
@@ -57,6 +64,10 @@ function battleReducer(state = initialState, action) {
   let challengeName;
   let modalVisibility;
   let ideVisibility;
+  let youLoseVisibility;
+  let resultText;
+  let resultPicture;
+  let resultHeader;
 
   switch (action.type) {
     case types.SAVE_LEFT_CODE:
@@ -97,7 +108,6 @@ function battleReducer(state = initialState, action) {
       ideVisibility = 'visible';
       modalVisibility = 'hidden';
 
-      console.log('ide: ', ideVisibility, 'modal: ', modalVisibility);
       return fromJS({
         ...tempState,
         roomId,
@@ -135,7 +145,42 @@ function battleReducer(state = initialState, action) {
 
       return fromJS({ ...tempState });
 
-      break;
+    case types.PASSED_TESTS:
+      tempState = state.toJS();
+      ideVisibility = 'hidden';
+      youLoseVisibility = 'visible';
+      resultPicture =
+        'https://media.giphy.com/media/tIFtLCKZEurywLm0gG/giphy.gif';
+      resultHeader = 'YOU WIN!';
+      socket.send({
+        type: 'WON'
+      });
+      return fromJS({
+        ...tempState,
+        ideVisibility,
+        resultPicture,
+        youLoseVisibility
+      });
+
+    case types.FAILED_TESTS:
+      tempState = state.toJS();
+      resultText = 'YOU FAILED';
+
+      return fromJS({
+        ...tempState,
+        resultText
+      });
+
+    case types.LOSER:
+      tempState = state.toJS();
+      ideVisibility = 'hidden';
+      youLoseVisibility = 'visible';
+
+      return fromJS({
+        ...tempState,
+        ideVisibility,
+        youLoseVisibility
+      });
 
     default:
       return fromJS(state);
