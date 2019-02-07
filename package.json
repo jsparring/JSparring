@@ -9,7 +9,7 @@
     "client-dev-server": "nodemon clientServer/server.js",
     "WSServer": "nodemon Server/Server.js",
     "webpack-server": "webpack-dev-server --hot --open",
-    "testServer": "nodemon testServer/server.js"
+    "testServer": "nodemon testServer/Testing_Server.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,9 @@
     "express": "^4.16.4",
     "immutable": "^4.0.0-rc.12",
     "jasmine": "^3.3.1",
+    "json-fn": "^1.1.1",
     "node-fetch": "^2.3.0",
+    "path": "^0.12.7",
     "react": "^16.7.0",
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.7.0",
