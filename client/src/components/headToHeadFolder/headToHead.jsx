@@ -65,10 +65,6 @@ class HeadToHead extends React.Component {
     this.props.saveLeftCode(value);
   }
 
-  componentDidMount() {
-    this.props.joinRoom();
-  }
-
   render() {
     return (
       <div className="battleBody">

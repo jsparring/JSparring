@@ -30,7 +30,6 @@ class Modal extends React.Component {
   }
 
   componentDidMount() {
-    console.log('===USERNAME===', this.props.username);
     this.props.joinRoom(this.props.username);
   }
 

@@ -41,6 +41,7 @@ class LoginPage extends React.Component {
       .then(result => {
         const token = result.credential.accessToken;
         const user = result.user;
+        console.log('github user: ', user);
         const userData = {};
         userData.email = user.email;
         userData.uid = user.uid;
