@@ -30,7 +30,7 @@ function getChallengeClient(req, res, next) {
             })
           );
         })
-        .catch(error => error);
+        .catch(error => console.log(error));
     })
     .catch(error => {
       console.error('Error connecting client: ', error);

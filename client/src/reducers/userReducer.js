@@ -16,7 +16,6 @@ function userReducer(state = initialState, action) {
   switch (action.type) {
     case types.SAVE_USER_DATA:
       tempState = state.toJS();
-      console.log('in reducer: ', action.payload);
       username = action.payload.username;
       photoURL = action.payload.photoURL;
       isLoggedIn = true;

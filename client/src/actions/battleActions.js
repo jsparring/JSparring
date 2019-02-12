@@ -35,11 +35,14 @@ export const testReturned = response => ({
 
 export const getChallenge = () => {
   return dispatch => {
+    console.log('*** getting challenge');
     fetch('http://localhost:8002/getchallenge')
       .then(res => {
+        console.log(res);
         return res.json();
       })
       .then(json => {
+        console.log('==JSON==', json);
         const description = json.description;
         dispatch(socketsDescription(description));
         dispatch(gotChallenge(json));
@@ -70,12 +73,12 @@ export const submitCode = (challengeName, code) => {
 
     const func = JSONfn.stringify(code);
 
-    fetch(`https://localhost:8003/runtest`, {
+    fetch(`http://localhost:8003/runtest/${challengeName}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: { func, challengeName }
+      body: func
     })
       .then(res => res.json())
       .then(json => {

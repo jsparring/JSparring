@@ -11,8 +11,9 @@ export const fetchUsername = userData => {
       .then(res => res.json())
       .then(json => {
         const username = json.results[0].login.username;
-        console.log(username);
         userData.username = username;
+        console.log('user Data: ', userData);
+
         // dispatch(sendToServer(userData));
         dispatch(saveUserData(userData));
       });

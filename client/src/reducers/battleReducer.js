@@ -1,5 +1,5 @@
+import { fromJS } from 'immutable';
 import * as types from '../actions/battleActionTypes';
-import { fromJS, toJS } from 'immutable';
 import * as actions from '../actions/battleActions';
 
 export const setUpSocket = (dispatch, username) => {
@@ -19,14 +19,13 @@ export const setUpSocket = (dispatch, username) => {
     if (type === 'CODE') {
       dispatch(actions.writeCode(data.payload));
     } else if (type === 'WAIT_STATUS') {
-      //do something
+      // do something
     } else if (type === 'JOINED_ROOM') {
       dispatch(actions.saveRoomId(data.payload));
       dispatch(actions.getChallenge());
     } else if (type === 'BANANAS') {
       // opponent left room
     } else if (type === 'DESCRIPTION') {
-      // dispatch action to save description to right side
       dispatch(actions.populatRightDescription(data.payload));
     } else if (type === 'LOSE') {
       dispatch(actions.loser());
@@ -41,11 +40,11 @@ const initialState = fromJS({
   leftDescription: '',
   rightDescription: '',
   challengeName: '',
-  ideVisibility: 'hidden',
-  youLoseVisibility: 'hidden',
-  modalVisibility: 'visible',
-  opponentName: 'player 2',
-  username: 'angry_jellyfish666',
+  showIde: false,
+  youLose: false,
+  showModal: true,
+  opponentName: '',
+  username: '',
   passedTests: false,
   resultPicture: 'https://thumbs.gfycat.com/ApprehensiveOddballAgama-small.gif',
   resultHeader: 'YOU LOSE!',
@@ -62,12 +61,14 @@ function battleReducer(state = initialState, action) {
   let rightCode;
   let roomId;
   let challengeName;
-  let modalVisibility;
-  let ideVisibility;
-  let youLoseVisibility;
+  let showModal;
+  let showIde;
+  let youLose;
   let resultText;
   let resultPicture;
   let resultHeader;
+  let opponentName;
+  let username;
 
   switch (action.type) {
     case types.SAVE_LEFT_CODE:
@@ -85,7 +86,8 @@ function battleReducer(state = initialState, action) {
     case types.JOIN_ROOM:
       tempState = state.toJS();
       dispatch = action.payload.dispatch;
-      socket = setUpSocket(dispatch, 'angry_jellyfish666');
+      username = action.payload.username;
+      socket = setUpSocket(dispatch, username);
 
       return fromJS({
         ...tempState,
@@ -103,16 +105,17 @@ function battleReducer(state = initialState, action) {
 
     case types.SAVE_ROOM_ID:
       tempState = state.toJS();
-
       roomId = action.payload.roomIdx;
-      ideVisibility = 'visible';
-      modalVisibility = 'hidden';
+      opponentName = action.payload.userName;
+      showIde = true;
+      showModal = false;
 
       return fromJS({
         ...tempState,
         roomId,
-        ideVisibility,
-        modalVisibility
+        showIde,
+        showModal,
+        opponentName
       });
 
     case types.GOT_CHALLENGE:
@@ -146,8 +149,8 @@ function battleReducer(state = initialState, action) {
 
     case types.PASSED_TESTS:
       tempState = state.toJS();
-      ideVisibility = 'hidden';
-      youLoseVisibility = 'visible';
+      showIde = false;
+      youLose = true;
       resultPicture =
         'https://media.giphy.com/media/tIFtLCKZEurywLm0gG/giphy.gif';
       resultHeader = 'YOU WIN!';
@@ -156,9 +159,9 @@ function battleReducer(state = initialState, action) {
       });
       return fromJS({
         ...tempState,
-        ideVisibility,
+        showIde,
         resultPicture,
-        youLoseVisibility
+        youLose
       });
 
     case types.FAILED_TESTS:
@@ -172,13 +175,13 @@ function battleReducer(state = initialState, action) {
 
     case types.LOSER:
       tempState = state.toJS();
-      ideVisibility = 'hidden';
-      youLoseVisibility = 'visible';
+      showIde = false;
+      youLose = true;
 
       return fromJS({
         ...tempState,
-        ideVisibility,
-        youLoseVisibility
+        showIde,
+        youLose
       });
 
     default:
