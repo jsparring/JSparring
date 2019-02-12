@@ -78,7 +78,6 @@ class HeadToHead extends React.Component {
             </div>
             <CodeMirror
               id="left-codemirror"
-              // value={this.props.leftCode}
               options={{
                 mode: 'javascript',
                 theme: 'erlang-dark',
