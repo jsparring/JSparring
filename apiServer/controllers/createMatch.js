@@ -41,9 +41,17 @@ function createMatch(req, res, next) {
               res.status(200);
               res.send('Created match');
             })
-            .catch(error => error);
+            .catch(error => {
+              console.error('Error creating match: ', error);
+              res.status(400);
+              res.send('Error creating match');
+            });
         })
-        .catch(error => error);
+        .catch(error => {
+          console.error('Error writing to database: ', error);
+          res.status(400);
+          res.send('Error writing to database');
+        });
     })
     .catch(error => {
       console.error('Error connecting to db: ', error);

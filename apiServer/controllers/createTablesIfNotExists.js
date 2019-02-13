@@ -2,28 +2,29 @@ const pool = require('../db');
 
 const queryString = `
 CREATE TABLE IF NOT EXISTS users(
-	username varchar(64) PRIMARY KEY NOT NULL,
-	token varchar(16)
+  uid varchar(64) PRIMARY KEY NOT NULL,
+  username varchar(64) NOT NULL,
+  photoURL text NOT NULL,
+	email text NOT NULL
 );
 CREATE TABLE IF NOT EXISTS challenges(
 	challenge varchar(64) PRIMARY KEY NOT NULL,
 	tier INTEGER NOT NULL,
-	description text NOT NULL,
-	test text NOT NULL
+	description text NOT NULL
 );
 CREATE TABLE IF NOT EXISTS matches(
 	matchID SERIAL PRIMARY KEY,
-	player1 varchar(64) REFERENCES users(username) NOT NULL,
-	player2 varchar(64) REFERENCES users(username) NOT NULL
+	player1 varchar(64) REFERENCES users(uid) NOT NULL,
+	player2 varchar(64) REFERENCES users(uid) NOT NULL
 );
 CREATE TABLE wins(
 	matchID INTEGER PRIMARY KEY REFERENCES matches(matchID) NOT NULL,
-	username varchar(64) REFERENCES users(username) NOT NULL,
+	uid varchar(64) REFERENCES users(uid) NOT NULL,
 	challenge varchar(64) REFERENCES challenges(challenge) NOT NULL
 );
 CREATE TABLE losses(
 	matchID INTEGER PRIMARY KEY REFERENCES matches(matchID) NOT NULL,
-	username varchar(64) REFERENCES users(username) NOT NULL,
+	uid varchar(64) REFERENCES users(uid) NOT NULL,
 	challenge varchar(64) REFERENCES challenges(challenge) NOT NULL
 );
 `;

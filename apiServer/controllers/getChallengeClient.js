@@ -28,7 +28,11 @@ function getChallengeClient(req, res, next) {
             })
           );
         })
-        .catch(error => error);
+        .catch(error => {
+          console.error('Error querying database: ', error);
+          res.status(400);
+          res.send('Error querying database');
+        });
     })
     .catch(error => {
       console.error('Error connecting client: ', error);

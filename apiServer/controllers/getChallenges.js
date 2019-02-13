@@ -10,10 +10,9 @@ function getChallenges(req, res, next) {
           const challenges = result.rows;
           const jsonChallenges = challenges.reduce(
             (accChallenges, challengeDetails) => {
-              const { challenge, tier, description, test } = challengeDetails;
+              const { challenge, tier, description } = challengeDetails;
               accChallenges[`${challenge}`] = {
                 description,
-                test,
                 tier
               };
               return accChallenges;
@@ -24,7 +23,11 @@ function getChallenges(req, res, next) {
           res.setHeader('content-type', 'application/json');
           res.send(JSON.stringify(jsonChallenges));
         })
-        .catch(error => error);
+        .catch(error => {
+          console.error('Error querying databse: ', error);
+          res.status(400);
+          res.send('Error querying database');
+        });
     })
     .catch(error => {
       console.error('Error getting challenges: ', error);

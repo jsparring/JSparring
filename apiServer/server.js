@@ -14,13 +14,18 @@ const {
 
 app.use(bodyParser.json());
 
-app.get('/', createMatch);
-
-app.get('/createuser', createUser);
-app.get('/createchallenge', createChallenge);
+/*
+email:
+uid:
+photoURL:
+username:
+*/
+app.post('/createchallenge', createChallenge);
 app.get('/getchallenges', getChallenges);
 app.get('/getchallenge', getChallengeClient);
-app.get('/creatematch', createMatch);
+app.post('/creatematch', createMatch);
+app.post('/createuser', createUser);
+app.post('/createtables', createTablesIfNotExists);
 
 // Routes
 // [x] createuser
@@ -28,7 +33,9 @@ app.get('/creatematch', createMatch);
 // [x] getchallengeclient
 // [x] getchallenges
 // [x] creatematch
+// [] update username
+//
 
 app.listen(8002, () => {
-  console.log(`API server listening on port 8082`);
+  console.log(`API server listening on port 8002`);
 });

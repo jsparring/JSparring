@@ -1,7 +1,7 @@
 const pool = require('../db');
 
 function createChallenge(req, res, next) {
-  const { challenge, tier, description, test } = req.body;
+  const { challenge, tier, description } = req.body;
   pool
     .connect()
     .then(client => {
@@ -12,19 +12,28 @@ function createChallenge(req, res, next) {
             client
               .query(
                 `INSERT INTO challenges 
-                (challenge, tier, description, test) 
-                VALUES ('${challenge}', '${tier}', '${description}', '${test}')`
+                (challenge, tier, description) 
+                VALUES ('${challenge}', '${tier}', '${description}')`
               )
-              .then(() => {
+              .then(data => {
                 res.status(200);
                 res.send('Created challenge');
               })
-              .catch(error => error);
+              .catch(error => {
+                console.error('Error creating challenge: ', error);
+                res.status(400);
+                res.send('Error creating challenge');
+              });
           } else {
-            throw new Error('Challenge already exists');
+            res.status(400);
+            res.send('Challenge already exists');
           }
         })
-        .catch(error => error);
+        .catch(error => {
+          console.error('Error querying database: ', error);
+          res.status(400);
+          res.send('Error querying database');
+        });
     })
     .catch(error => {
       console.error('Error creating challenge: ', error);
