@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const JoinRoomBody = styled.div`
-  height: 100vh;
-  width: 100%;
+  padding-top: 6em;
+  height: 70%;
 `;
 
 export const JoinRoomContainer = styled.div`

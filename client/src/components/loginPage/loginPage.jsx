@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   LoginBody,
   LoginHeader,
   LoginContainer,
   Description,
   GithubButton
-} from "../styleComponents/styleComponents";
+} from '../styleComponents/styleComponents';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -13,8 +13,8 @@ class LoginPage extends React.Component {
   }
 
   githubLogin() {
-    console.log("hi");
-    fetch("http://localhost:8000/github_login")
+    console.log('hi');
+    fetch('http://localhost:8000/github_login')
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }

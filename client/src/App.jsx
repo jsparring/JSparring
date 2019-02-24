@@ -1,30 +1,28 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import store from './store';
 import './app.css';
 import LoginPage from './components/loginPage/loginPage';
-import BattlePage from './components/battlePage/battlePage.jsx';
+import BattlePage from './components/battlePage/battlePage';
 import JoinRoom from './components/joinPage/joinRoom';
-import { Provider } from 'react-redux';
-import store from './store';
+import Navbar from './components/sharedComponents/Navbar';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <BrowserRouter>
+const App = () => {
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <div>
+          <Navbar />
           <Switch>
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/battle" component={BattlePage} />
             <Route exact path="/join" component={JoinRoom} />
           </Switch>
-        </BrowserRouter>
-      </Provider>
-    );
-  }
-}
+        </div>
+      </BrowserRouter>
+    </Provider>
+  );
+};
 
 export default App;
