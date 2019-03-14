@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 export const LoginBody = styled.div`
   background-color: #2f2f2f;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   font-family: 'Ubuntu', sans-serif;
-  position: relative;
 `;
 
 export const LoginContainer = styled.div`
@@ -23,6 +22,7 @@ export const LoginHeader = styled.h1`
   text-align: center;
   margin: 0;
   color: #00e1ff;
+  font-family: 'Ubuntu', sans-serif;
 `;
 
 export const Description = styled.p`
